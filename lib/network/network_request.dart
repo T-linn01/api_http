@@ -12,8 +12,11 @@ class NetworkRequest {
     return posts;
   }
 
-  static Future<List<Post>> fetchPosts({int page = 1}) async {
-    final response = await http.get(Uri.parse(url));
+  static Future<List<Post>> fetchPosts() async {
+    final response = await http.get(Uri.parse(url),
+    headers: {
+      "content-type" : "application/json"
+    });
     if (response.statusCode == 200) {
       return compute(parsePost, response.body);
     } else if (response.statusCode == 404) {
@@ -23,3 +26,5 @@ class NetworkRequest {
     }
   }
 }
+
+
